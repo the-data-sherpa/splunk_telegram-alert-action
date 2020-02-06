@@ -1,0 +1,41 @@
+<form class="form-horizontal form-complex">
+    <div class="control-group">
+        <label class="control-label" for="telegram_message">Message</label>
+
+        <div class="controls">
+            <input type="text" name="action.telegram.param.message" id="telegram_message" placeholder="e.g. URGENT! Please Action! " />
+            <span class="help-block">The message delivered to the bot</span>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="telegram_severity">Severity</label>
+
+        <div class="controls">
+            <select name="action.telegram.param.severity" id="telegram_severity" >
+                          <option value="LOW">Low</option>
+                          <option value="MEDIUM">Medium</option>
+                          <option value="HIGH">High</option>
+                          <option value="CRITICAL">Critical</option>
+                        </select>
+            <span class="help-block">The severity of the message</span>
+        </div>
+    </div>
+     
+    <div class="control-group">
+        <label class="control-label" for="telegram_chat">Chat ID</label>
+
+        <div class="controls">
+            <input type="text" name="action.telegram.param.chat" id="telegram_chat" placeholder="e.g. -15489159 " />
+            <span class="help-block">The Chat ID for the bot to send the message to.</span>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="telegram_bot">Bot ID</label>
+
+        <div class="controls">
+            <input type="text" name="action.telegram.param.botID" id="telegram_bot" placeholder="e.g. 404878142:AAFUeg1fdsagragreqgrqgw" />
+            <span class="help-block">The Bot ID to send the message to.</span>
+        </div>
+    </div>
+</form>
+
