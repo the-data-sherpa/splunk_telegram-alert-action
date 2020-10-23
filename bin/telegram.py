@@ -1,76 +1,61 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
 
-
-#Splunk Custom Alert Action for Telegram 
+# encoding = utf-8
+# Always put this line at the beginning of this file
+import alert_telegram_declare
 
 import os
 import sys
-import re
-import subprocess
-import json
-import csv
-import gzip
-import requests
-import urllib
-import datetime
 
-URL = "https://api.telegram.org"
+from alert_actions_base import ModularAlertBase
+import modalert_telegram_helper
 
-def get_url(url):
-    response = requests.get(url)
-    content = response.content.decode("utf8")
-    return content
+class AlertActionWorkertelegram(ModularAlertBase):
 
-def send_message(text):
-    url = URL + "{}".format(text)
-    get_url(url)
+    def __init__(self, ta_name, alert_name):
+        super(AlertActionWorkertelegram, self).__init__(ta_name, alert_name)
 
-def log(msg):
-    f = open(os.path.join(os.environ["SPLUNK_HOME"],  "var", "log", "splunk", "alert_telegram.log"), "a")
-    print >> f, str(datetime.datetime.now().isoformat()), msg
-    f.close()
+    def validate_params(self):
 
-#Check args
-def main():
-    #os.environ['LD_LIBRARY_PATH'] = os.getcwd()
-    #get json ouptut from splunk modular alert - See alert_actions.conf.spec
-    payload = json.loads(sys.stdin.read())
-    config = payload.get('configuration', dict())
-    #host = payload.get('host') 
-    splunkServer = payload.get('server_host')
-    splunkURI = payload.get('server_uri')
-    splunkApp = payload.get('app')
-    splunkSearch = payload.get('search_name')
-    resultsLink = payload.get('results_link')
-    #result = payload.get('result')
-    botID = config.get('botID')
-    message = config.get('message')
-    severity = config.get('severity')
-    chat = config.get('chat')
-    message = "<b>****SPLUNK ALERT MESSAGE***</b>\n<b>Splunk Search</b>: {0} \n<b>SEVERITY</b>: {1} \n<b>MESSAGE</b>: {2} \n<b>Results Link</b>: {3}".format(splunkSearch, severity, message, resultsLink)
+        if not self.get_param("event_title"):
+            self.log_error('event_title is a mandatory parameter, but its value is None.')
+            return False
 
-    #Format the paramaters and pass them to send_message
-    params = urllib.urlencode({'text': message,
-                               'chat_id': chat,
-                               'parse_mode': "HTML",
-                               'disable_web_page_preview': "1"})
-    link = "/bot{0}/sendMessage?{1}".format(botID, params)
+        if not self.get_param("message"):
+            self.log_error('message is a mandatory parameter, but its value is None.')
+            return False
 
-            #UNCOMMENT DEBUG
-    log("[DEBUG] - Telegram Alert Starting")
+        if not self.get_param("severity"):
+            self.log_error('severity is a mandatory parameter, but its value is None.')
+            return False
 
-    try:
-        log("[DEBUG] - Sending Alert Message")
-        send_message(link) 
-        log("[DEBUG] - Alert Message Sent")
-    except:
-        log("[ERROR] - Telegram Alert Failed, check splunkd.log for more details.")
-        sys.stderr.write('[Telegram] failed to run CURL command\n')
-        sys.stderr.write('[Telegram] {0}\n'.format(message))
+        if not self.get_param("bot_id"):
+            self.log_error('bot_id is a mandatory parameter, but its value is None.')
+            return False
+
+        if not self.get_param("chat_id"):
+            self.log_error('chat_id is a mandatory parameter, but its value is None.')
+            return False
+        return True
+
+    def process_event(self, *args, **kwargs):
+        status = 0
+        try:
+            if not self.validate_params():
+                return 3
+            status = modalert_telegram_helper.process_event(self, *args, **kwargs)
+        except (AttributeError, TypeError) as ae:
+            self.log_error("Error: {}. Please double check spelling and also verify that a compatible version of Splunk_SA_CIM is installed.".format(str(ae)))
+            return 4
+        except Exception as e:
+            msg = "Unexpected error: {}."
+            if e:
+                self.log_error(msg.format(str(e)))
+            else:
+                import traceback
+                self.log_error(msg.format(traceback.format_exc()))
+            return 5
+        return status
+
 if __name__ == "__main__":
-    if len(sys.argv) < 2 or sys.argv[1] != "--execute":
-        print >> sys.stderr, "FATAL Unsupported execution mode (expected --execute flag)"
-        sys.exit()
-
-    main()
+    exitcode = AlertActionWorkertelegram("alert_telegram", "telegram").run(sys.argv)
+    sys.exit(exitcode)

@@ -1,17 +1,9 @@
+
 [telegram]
-
-param.targetURI = <string>
-#sets the Bot ID for the Telegram alerts
-
-param.message = <string>
-#sets a user defined message to send
-
-param.severity = <string>
-#sets the severity of the event (ie. CRITICAL )
-
-param.chat = <string>
-#sets the Chat ID for the bot to engage for the event (ie. -15489159 )
-
-
-
+python.version = python3
+param.event_title = <string> Event Title. It's a required parameter.
+param.message = <string> Message. It's a required parameter.
+param.severity = <list> Severity. It's a required parameter. It's default value is Low.
+param.bot_id = <string> Bot ID. It's a required parameter.
+param.chat_id = <string> Chat ID. It's a required parameter.
 

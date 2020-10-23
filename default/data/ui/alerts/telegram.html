@@ -1,41 +1,52 @@
 <form class="form-horizontal form-complex">
-    <div class="control-group">
-        <label class="control-label" for="telegram_message">Message</label>
-
-        <div class="controls">
-            <input type="text" name="action.telegram.param.message" id="telegram_message" placeholder="e.g. URGENT! Please Action! " />
-            <span class="help-block">The message delivered to the bot</span>
-        </div>
+<div class="control-group">
+	<label class="control-label" for="telegram_event_title">Event Title <span class="required">*</span> </label>
+    <div class="controls">
+	<input type="text" name="action.telegram.param.event_title" id="telegram_event_title"/>
+                <span class="help-block"> 
+                    Title of the event to be sent to Telegram. (You can us $result.FIELDNAME$ to send query result values)
+                </span>
     </div>
-    <div class="control-group">
-        <label class="control-label" for="telegram_severity">Severity</label>
-
-        <div class="controls">
-            <select name="action.telegram.param.severity" id="telegram_severity" >
-                          <option value="LOW">Low</option>
-                          <option value="MEDIUM">Medium</option>
-                          <option value="HIGH">High</option>
-                          <option value="CRITICAL">Critical</option>
-                        </select>
-            <span class="help-block">The severity of the message</span>
-        </div>
+</div>
+<div class="control-group">
+	<label class="control-label" for="telegram_message">Message <span class="required">*</span> </label>
+    <div class="controls">
+	<input type="text" name="action.telegram.param.message" id="telegram_message"/>
+                <span class="help-block"> 
+                    Additional message to include in the alert to Telegram. Title of the event to be sent to Telegram. (You can us $result.FIELDNAME$ to send query result values)
+                </span>
     </div>
-     
-    <div class="control-group">
-        <label class="control-label" for="telegram_chat">Chat ID</label>
-
-        <div class="controls">
-            <input type="text" name="action.telegram.param.chat" id="telegram_chat" placeholder="e.g. -15489159 " />
-            <span class="help-block">The Chat ID for the bot to send the message to.</span>
-        </div>
+</div>
+<div class="control-group">
+	<label class="control-label" for="telegram_severity">Severity <span class="required">*</span> </label>
+    <div class="controls">
+<select name="action.telegram.param.severity" id="telegram_severity">
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+        <option value="Critical">Critical</option>
+        <option value="Low">Low</option>
+</select>
+                <span class="help-block"> 
+                    Select the Severity of the alert to be sent to Telegram.
+                </span>
     </div>
-    <div class="control-group">
-        <label class="control-label" for="telegram_bot">Bot ID</label>
-
-        <div class="controls">
-            <input type="text" name="action.telegram.param.botID" id="telegram_bot" placeholder="e.g. 404878142:AAFUeg1fdsagragreqgrqgw" />
-            <span class="help-block">The Bot ID to send the message to.</span>
-        </div>
+</div>
+<div class="control-group">
+	<label class="control-label" for="telegram_bot_id">Bot ID <span class="required">*</span> </label>
+    <div class="controls">
+	<input type="text" name="action.telegram.param.bot_id" id="telegram_bot_id"/>
+                <span class="help-block"> 
+                    ID of the Telegram Bot to send the message through. (Reference https://core.telegram.org/bots)
+                </span>
     </div>
+</div>
+<div class="control-group">
+	<label class="control-label" for="telegram_chat_id">Chat ID <span class="required">*</span> </label>
+    <div class="controls">
+	<input type="text" name="action.telegram.param.chat_id" id="telegram_chat_id"/>
+                <span class="help-block"> 
+                    Chat ID that the Telegram Bot belongs to for the alert message. (Reference ID of the Telegram Bot to send the message through. (Reference https://core.telegram.org/bots)
+                </span>
+    </div>
+</div>
 </form>
-
