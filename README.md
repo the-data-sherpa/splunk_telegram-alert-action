@@ -6,9 +6,9 @@ The Telegram Alert Action allows Splunk to send alerts to Telegram groups and ch
 ## Installation and configuration
 To install the Telegram Alert Action, follow the instructions in the [Splunk Add-ons](http://docs.splunk.com/Documentation/AddOns/latest/Overview/Installingadd-ons)
 
-##Usage
+## Usage
 
-##Create an existing alert with the Telegram alert action
+## Create an existing alert with the Telegram alert action
 1.) In the **Search & Reporting** app, run a search for your string.
 2.) Confirm that the search results look as you expect.
 3.) Click the **Save As** dropdown link above the right side of the search box, then select Alert from the menu that appears.
@@ -17,7 +17,7 @@ To install the Telegram Alert Action, follow the instructions in the [Splunk Add
 6.) Enter the **Message** and select the **Severity** that you want Telegram to send when the alert is triggered.
 7.) Enter the **Chat ID** and the **Bot ID** that you will be sending the Alert, Message, and Result link to, then click **Save**.
 
-##Add a Telegram action to an existing alert
+## Add a Telegram action to an existing alert
 1.) In the **Search & Reporting app**, navigate to the **Alerts** tab and locate the existing alert.
 2.) Click **Edit**, then select **Edit Actions**.
 3.) Click **+ Add Actions**, then select **Telegram Alert**.
